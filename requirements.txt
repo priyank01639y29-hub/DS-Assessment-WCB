@@ -1,0 +1,29 @@
+# PolicyPal RAG environment — packages from rag_implementation_guide.md
+
+# --- PDF parsing (§1.1) ---
+pymupdf                 # fitz: char offsets + bounding boxes for highlight rendering
+
+# --- LLM SDKs (§0) ---
+anthropic               # primary SDK (claude-sonnet-4-6 in the guide)
+openai                  # listed alternative SDK
+
+# --- Vector store / Postgres (§2.3) ---
+pgvector                # pgvector Python bindings
+psycopg[binary]         # Postgres driver
+
+# --- Lexical search (§0, in-memory option) ---
+rank_bm25               # BM25 without Elasticsearch
+
+# --- Numerics (in-memory prototype vector store) ---
+numpy
+
+# --- Optional UI (§0, §6 step 6) ---
+streamlit               # claim <-> highlighted PDF region viewer
+
+# --- Notebook environment ---
+jupyterlab
+notebook
+ipykernel
+
+# --- Tests ---
+pytest

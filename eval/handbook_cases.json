@@ -1,0 +1,122 @@
+[
+  {
+    "id": "remote-days-current",
+    "question": "How many days per week can I currently work remotely?",
+    "answerable": true,
+    "expected": ["1 day", "friday"],
+    "evidence": ["remote work is now limited to 1 day per week maximum", "this day must be a friday"],
+    "note": "TRAP: Section 1 says 'up to 3 days (Tue/Wed/Thu)' but the June-2024 URGENT AMENDMENT supersedes it to 1 day/week on Fridays. A correct answer must reflect the amendment."
+  },
+  {
+    "id": "remote-stipend-amount",
+    "question": "Is there a stipend for remote work equipment, and how much is it?",
+    "answerable": true,
+    "expected": ["$1,000"],
+    "evidence": ["maximum reimbursement amount of $1,000 per year"],
+    "note": "Remote Work Equipment Stipend, $1,000/yr."
+  },
+  {
+    "id": "password-length",
+    "question": "What are the password length requirements?",
+    "answerable": true,
+    "expected": ["14 characters"],
+    "evidence": ["all passwords must be exactly 14 characters long"],
+    "note": "IT Security: Password Complexity."
+  },
+  {
+    "id": "christmas-office-status",
+    "question": "Is the office open on Christmas?",
+    "answerable": true,
+    "expected": ["closed"],
+    "evidence": ["christmas", "closed"],
+    "note": "Holiday schedule: Dec 25 Christmas = Closed."
+  },
+  {
+    "id": "july4-office-status",
+    "question": "What is the office status on Independence Day (July 4)?",
+    "answerable": true,
+    "expected": ["voluntary"],
+    "evidence": ["independence day", "open (voluntary)"],
+    "note": "Holiday schedule: Jul 04 = Open (Voluntary)."
+  },
+  {
+    "id": "floating-holiday-deadline",
+    "question": "By when must floating holidays be used?",
+    "answerable": true,
+    "expected": ["q3"],
+    "evidence": ["floating holidays must be used by q3"],
+    "note": "Appendix B note."
+  },
+  {
+    "id": "counseling-support",
+    "question": "What mental health or counseling support does the company provide?",
+    "answerable": true,
+    "expected": ["employee assistance"],
+    "evidence": ["employee assistance programs", "confidential counseling"],
+    "note": "Section 11: EAPs providing confidential counseling."
+  },
+  {
+    "id": "travel-preapproval-threshold",
+    "question": "When do I need pre-trip approval for travel expenses?",
+    "answerable": true,
+    "expected": ["$1,000"],
+    "evidence": ["pre-trip approval requirements for all travel-related expenses exceeding $1,000"],
+    "note": "Section 4 travel policy."
+  },
+  {
+    "id": "expense-report-deadline",
+    "question": "How long do I have to submit an expense report after a trip?",
+    "answerable": true,
+    "expected": ["10 business days"],
+    "evidence": ["within 10 business days of trip completion"],
+    "note": "Section 4 travel policy."
+  },
+  {
+    "id": "newhire-perf-review",
+    "question": "Are brand-new hires included in the performance review cycle right away?",
+    "answerable": true,
+    "expected": ["six months"],
+    "evidence": ["new hires who will be exempt from the cycle for a period of six months"],
+    "note": "Section 10: new hires exempt for six months."
+  },
+  {
+    "id": "bereavement-leave",
+    "question": "How many days of bereavement leave am I entitled to?",
+    "answerable": false,
+    "expected": [],
+    "evidence": [],
+    "note": "ADVERSARIAL: handbook has no leave/bereavement section. Correct = abstain."
+  },
+  {
+    "id": "parental-leave",
+    "question": "What is the maternity and parental leave policy?",
+    "answerable": false,
+    "expected": [],
+    "evidence": [],
+    "note": "ADVERSARIAL: not in handbook. Correct = abstain."
+  },
+  {
+    "id": "retirement-401k",
+    "question": "How does the 401(k) matching work?",
+    "answerable": false,
+    "expected": [],
+    "evidence": [],
+    "note": "ADVERSARIAL: not in handbook. Correct = abstain."
+  },
+  {
+    "id": "tuition-reimbursement",
+    "question": "Is there tuition reimbursement for continuing education?",
+    "answerable": false,
+    "expected": [],
+    "evidence": [],
+    "note": "ADVERSARIAL: not in handbook. Correct = abstain."
+  },
+  {
+    "id": "pet-office-policy",
+    "question": "Can I bring my dog to the office?",
+    "answerable": false,
+    "expected": [],
+    "evidence": [],
+    "note": "ADVERSARIAL: not in handbook. Correct = abstain."
+  }
+]

@@ -1,0 +1,73 @@
+services:
+  jupyter:
+    build: .
+    ports:
+      - "8888:8888"   # JupyterLab
+      - "8501:8501"   # Streamlit (optional UI, §6 step 6)
+    volumes:
+      - ./:/workspace # live-edit notebooks; PDFs in this dir are visible inside
+    environment:
+      # Which backend the policypal package talks to: openrouter | anthropic | openai | mock
+      # (defaults to the first one whose key is set; "mock" runs fully offline).
+      - LLM_PROVIDER=${LLM_PROVIDER:-}
+      # --- OpenRouter (OpenAI-compatible gateway to many models) ---
+      - OPENROUTER_API_KEY=${OPENROUTER_API_KEY:-}
+      - OPENROUTER_BASE_URL=${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1}
+      - OPENROUTER_MODEL=${OPENROUTER_MODEL:-anthropic/claude-3.5-sonnet}
+      # --- Anthropic ---
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - ANTHROPIC_MODEL=${ANTHROPIC_MODEL:-claude-sonnet-4-6}
+      # --- common LLM sampling params (blank = use provider default; safest for
+      #     reasoning models that reject custom temperature). temperature=0 is ideal
+      #     for grounded RAG when the model allows it. ---
+      - TEMPERATURE=${TEMPERATURE:-}
+      - TOP_P=${TOP_P:-}
+      - SEED=${SEED:-}
+      - MAX_TOKENS=${MAX_TOKENS:-2000}
+      # --- OpenAI ---
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - OPENAI_MODEL=${OPENAI_MODEL:-gpt-4o}
+      - OPENAI_BASE_URL=${OPENAI_BASE_URL:-https://api.openai.com/v1}
+      # --- Embeddings ---
+      # local      = dependency-free hashing fallback (offline, no key)
+      # openai     = OpenAI /embeddings (uses OPENAI_API_KEY)
+      # openrouter = OpenRouter /embeddings (uses OPENROUTER_API_KEY; one key for chat+embed)
+      - EMBEDDING_PROVIDER=${EMBEDDING_PROVIDER:-local}
+      # for openrouter use a prefixed id, e.g. openai/text-embedding-3-small
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL:-text-embedding-3-small}
+      # Optional. Request a specific Matryoshka size from the API (e.g. 1536 from
+      # qwen3-embedding-8b, whose native dim is 4096). Leave unset to store the
+      # model's full dimension. Empty string = unset (see config.py).
+      - EMBEDDING_DIM=${EMBEDDING_DIM:-}
+      # --- token cost estimate (USD per 1M tokens; set to match your model/provider) ---
+      - COST_INPUT_PER_1M=${COST_INPUT_PER_1M:-3.00}
+      - COST_OUTPUT_PER_1M=${COST_OUTPUT_PER_1M:-15.00}
+      # --- storage backend for embeddings + corpus ---
+      # auto = pgvector when DATABASE_URL is set (default here), else in-RAM
+      # memory = in-RAM (NumPy + BM25)   pgvector = store embeddings in Postgres
+      - STORE_BACKEND=${STORE_BACKEND:-auto}
+      - STORE_REBUILD=${STORE_REBUILD:-0}
+      # pgvector Postgres reachable from notebooks at this URL:
+      - DATABASE_URL=postgresql://policypal:policypal@db:5432/policypal
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: pgvector/pgvector:pg16   # Postgres 16 with the `vector` extension preinstalled
+    environment:
+      - POSTGRES_USER=policypal
+      - POSTGRES_PASSWORD=policypal
+      - POSTGRES_DB=policypal
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U policypal -d policypal"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:

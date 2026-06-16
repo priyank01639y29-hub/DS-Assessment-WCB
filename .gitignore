@@ -1,0 +1,19 @@
+# --- secrets / env (never commit API keys) ---
+.env
+.env.*
+!.env.example
+
+# --- python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# --- jupyter ---
+*-checkpoint.ipynb
+
+# --- os ---
+.DS_Store
